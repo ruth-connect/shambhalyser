@@ -7,6 +7,15 @@ public class DataPoint {
 	private double linearAccelerationZ;
 	private double absoluteAcceleration;
 
+	public DataPoint(double time, double linearAccelerationX, double linearAccelerationY, double linearAccelerationZ,
+			double absoluteAcceleration) {
+		this.time = time;
+		this.linearAccelerationX = linearAccelerationX;
+		this.linearAccelerationY = linearAccelerationY;
+		this.linearAccelerationZ = linearAccelerationZ;
+		this.absoluteAcceleration = absoluteAcceleration;
+	}
+
 	public double getTime() {
 		return time;
 	}
