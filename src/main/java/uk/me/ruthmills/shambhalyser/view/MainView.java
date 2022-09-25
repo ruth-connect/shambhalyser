@@ -30,6 +30,7 @@ public class MainView extends VerticalLayout {
 	@Autowired
 	public MainView(DataService dataService, FilterService filterService) throws IOException {
 		DataSet shambhala = filterService.lowPassFilter(dataService.readDataSet("Shambhala"));
+		dataService.writeDataSet("Shambhala", 120, 200, shambhala);
 		List<DataPoint> dataPoints = shambhala.getDataPoints();
 
 		DefaultTableXYDataset xyDataset = new DefaultTableXYDataset();
