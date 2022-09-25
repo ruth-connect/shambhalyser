@@ -1,6 +1,5 @@
 package uk.me.ruthmills.shambhalyser.view;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
 
@@ -78,10 +77,8 @@ public class MainView extends VerticalLayout {
 		xyDataset.addSeries(seriesZ);
 		xyDataset.addSeries(seriesAbs);
 
-		chart = ChartFactory.createScatterPlot("Shambhala", "Time", "Acceleration", xyDataset, PlotOrientation.VERTICAL,
+		chart = ChartFactory.createXYLineChart("Shambhala", "Time", "Acceleration", xyDataset, PlotOrientation.VERTICAL,
 				true, false, false);
-
-		chart.setBackgroundPaint(Color.white);
 
 		JFreeChartWrapper wrapper = new JFreeChartWrapper(chart);
 
