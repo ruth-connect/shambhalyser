@@ -44,6 +44,12 @@
 			<artifactId>jfreechart</artifactId>
 			<version>1.0.13</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.faendir.vaadin</groupId>
+			<artifactId>jfreechart-flow</artifactId>
+			<version>1.1.6</version>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

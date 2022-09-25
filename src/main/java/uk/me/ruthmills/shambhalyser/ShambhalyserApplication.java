@@ -9,5 +9,4 @@ public class ShambhalyserApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ShambhalyserApplication.class, args);
 	}
-
 }

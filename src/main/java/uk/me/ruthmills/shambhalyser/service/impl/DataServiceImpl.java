@@ -12,7 +12,8 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import uk.me.ruthmills.shambhalyser.model.DataPoint;
@@ -22,7 +23,7 @@ import uk.me.ruthmills.shambhalyser.service.DataService;
 @Service
 public class DataServiceImpl implements DataService {
 
-	private static final Logger logger = Logger.getLogger(DataServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(DataServiceImpl.class);
 
 	@PostConstruct
 	public void initialise() throws IOException {
