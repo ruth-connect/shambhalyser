@@ -6,9 +6,10 @@ import java.util.List;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.xy.DefaultTableXYDataset;
+import org.jfree.data.xy.XYSeries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,13 @@ public class MainView extends VerticalLayout {
 		DataSet shambhala = dataService.readDataSet("Shambhala");
 		List<DataPoint> dataPoints = shambhala.getDataPoints();
 
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		DefaultTableXYDataset xyDataset = new DefaultTableXYDataset();
+		NumberAxis numberAxis = new NumberAxis("Acceleration");
+
+		XYSeries seriesX = new XYSeries("x", false, false);
+		XYSeries seriesY = new XYSeries("y", false, false);
+		XYSeries seriesZ = new XYSeries("z", false, false);
+		XYSeries seriesAbs = new XYSeries("Absolute", false, false);
 
 		for (int i = 0; i < dataPoints.size(); i += SAMPLE_COUNT) {
 			double time = dataPoints.get(i).getTime();
@@ -59,23 +66,22 @@ public class MainView extends VerticalLayout {
 			accelerationZ = accelerationZ / SAMPLE_COUNT;
 			accelerationAbs = accelerationAbs / SAMPLE_COUNT;
 			if (time >= 120d && time < 200d) {
-				dataset.addValue(accelerationX, "x", Double.toString(time));
-				dataset.addValue(accelerationY, "y", Double.toString(time));
-				dataset.addValue(accelerationZ, "z", Double.toString(time));
-				dataset.addValue(accelerationAbs, "Absolute", Double.toString(time));
+				seriesX.add(time, accelerationX);
+				seriesY.add(time, accelerationY);
+				seriesZ.add(time, accelerationZ);
+				seriesAbs.add(time, accelerationAbs);
 			}
 		}
 
-		chart = ChartFactory.createLineChart("Shambhala", "Time", "Acceleration", dataset, PlotOrientation.VERTICAL,
-				true, true, false);
+		xyDataset.addSeries(seriesX);
+		xyDataset.addSeries(seriesY);
+		xyDataset.addSeries(seriesZ);
+		xyDataset.addSeries(seriesAbs);
+
+		chart = ChartFactory.createScatterPlot("Shambhala", "Time", "Acceleration", xyDataset, PlotOrientation.VERTICAL,
+				true, false, false);
 
 		chart.setBackgroundPaint(Color.white);
-
-		// get a reference to the plot for further customisation...
-		CategoryPlot plot = (CategoryPlot) chart.getPlot();
-		plot.setBackgroundPaint(Color.white);
-		plot.setDomainGridlinesVisible(false);
-		plot.setRangeGridlinesVisible(false);
 
 		JFreeChartWrapper wrapper = new JFreeChartWrapper(chart);
 
