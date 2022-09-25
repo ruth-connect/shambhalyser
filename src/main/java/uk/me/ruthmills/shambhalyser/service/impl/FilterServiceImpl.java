@@ -22,9 +22,9 @@ public class FilterServiceImpl implements FilterService {
 		double[] linearAccelerationZ = new double[size];
 		double[] absoluteAcceleration = new double[size];
 		for (int i = 0; i < size; i++) {
-			linearAccelerationX[i] = 0d - dataPoints.get(i).getLinearAccelerationX();
-			linearAccelerationY[i] = 0d - dataPoints.get(i).getLinearAccelerationY();
-			linearAccelerationZ[i] = 0d - dataPoints.get(i).getLinearAccelerationZ();
+			linearAccelerationX[i] = dataPoints.get(i).getLinearAccelerationX();
+			linearAccelerationY[i] = dataPoints.get(i).getLinearAccelerationY();
+			linearAccelerationZ[i] = dataPoints.get(i).getLinearAccelerationZ();
 			absoluteAcceleration[i] = dataPoints.get(i).getAbsoluteAcceleration();
 		}
 		linearAccelerationX = filter(linearAccelerationX);
