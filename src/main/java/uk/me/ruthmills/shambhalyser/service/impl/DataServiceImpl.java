@@ -8,12 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import uk.me.ruthmills.shambhalyser.model.DataPoint;
@@ -22,14 +18,6 @@ import uk.me.ruthmills.shambhalyser.service.DataService;
 
 @Service
 public class DataServiceImpl implements DataService {
-
-	private static final Logger logger = LoggerFactory.getLogger(DataServiceImpl.class);
-
-	@PostConstruct
-	public void initialise() throws IOException {
-		DataSet dataSet = readDataSet("Shambhala");
-		logger.info("Number of data points: " + dataSet.getDataPoints().size());
-	}
 
 	@Override
 	public DataSet readDataSet(String name) throws IOException {
