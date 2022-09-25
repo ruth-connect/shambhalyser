@@ -25,6 +25,8 @@ import uk.me.ruthmills.shambhalyser.service.DataService;
 public class MainView extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
+	private static final int SAMPLE_COUNT = 50;
+
 	private DataService dataService;
 	private JFreeChart chart;
 
@@ -39,25 +41,28 @@ public class MainView extends VerticalLayout {
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-		for (int i = 0; i < dataPoints.size(); i += 100) {
+		for (int i = 0; i < dataPoints.size(); i += SAMPLE_COUNT) {
 			double time = dataPoints.get(i).getTime();
 			double accelerationX = 0;
 			double accelerationY = 0;
 			double accelerationZ = 0;
+			double accelerationAbs = 0;
 			int j = 0;
-			for (j = i; j < i + 100 && j < shambhala.getDataPoints().size(); j++) {
+			for (j = i; j < i + SAMPLE_COUNT && j < shambhala.getDataPoints().size(); j++) {
 				accelerationX += dataPoints.get(j).getLinearAccelerationX();
 				accelerationY += dataPoints.get(j).getLinearAccelerationY();
 				accelerationZ += dataPoints.get(j).getLinearAccelerationZ();
+				accelerationAbs += dataPoints.get(j).getAbsoluteAcceleration();
 			}
-			accelerationX = accelerationX / 100;
-			accelerationY = accelerationY / 100;
-			accelerationZ = accelerationZ / 100;
-			logger.info("Time: " + time + ", x: " + accelerationX);
+			accelerationX = accelerationX / SAMPLE_COUNT;
+			accelerationY = accelerationY / SAMPLE_COUNT;
+			accelerationZ = accelerationZ / SAMPLE_COUNT;
+			accelerationAbs = accelerationAbs / SAMPLE_COUNT;
 			if (time >= 120d && time < 200d) {
 				dataset.addValue(accelerationX, "x", Double.toString(time));
 				dataset.addValue(accelerationY, "y", Double.toString(time));
 				dataset.addValue(accelerationZ, "z", Double.toString(time));
+				dataset.addValue(accelerationAbs, "Absolute", Double.toString(time));
 			}
 		}
 
